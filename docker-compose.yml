@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: aws-segunda-entrega-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: aws_segunda_entrega
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - aws-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: aws_segunda_entrega-minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/minio_root
+    command: minio server /minio_root --console-address ":9001"
+    networks:
+      - aws-network
+
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    container_name: aws-segunda-entrega_dynamodb
+    ports:
+      - "8000:8000"
+    volumes:
+      - dynamodb_data:/home/dynamodblocal
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal"
+    networks:
+      - aws-network
+
+volumes:
+  postgres_data:
+    driver: local
+  minio_data:
+    driver: local
+  dynamodb_data:
+    driver: local
+
+networks:
+  aws-network:
+    driver: bridge

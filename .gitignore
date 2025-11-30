@@ -1,0 +1,34 @@
+cat > .gitignore << 'EOF'
+# Binarios
+*.exe
+*.exe~
+*.dll
+*.so
+*.so.*
+*.dylib
+*.o
+*.a
+
+# Directorios de test
+*.test
+*.out
+
+# Entorno
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Go
+vendor/
+go.sum
+EOF
+
+.github
+ROADMAP.md
