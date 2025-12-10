@@ -7,12 +7,12 @@ import (
 	"github.com/abrahamcruzc/aws-segundaentrega/internal/domain"
 )
 
-// AlumnosService - Lógica de negocio para Alumno
+// AlumnoService - Lógica de negocio para Alumno
 type AlumnoService interface {
 	GetAll(ctx context.Context) ([]domain.Alumno, error)
 	GetByID(ctx context.Context, id uint) (*domain.Alumno, error)
 	Create(ctx context.Context, alumno *domain.Alumno) error
-	Update(ctx context.Context, id uint) error
+	Update(ctx context.Context, id uint, alumno *domain.Alumno) error
 	Delete(ctx context.Context, id uint) error
 	UploadFotoPerfil(ctx context.Context, id uint, file io.Reader, filename string, contentType string) (string, error)
 	SendEmail(ctx context.Context, id uint) error
@@ -28,7 +28,7 @@ type ProfesorService interface {
 }
 
 type SesionService interface {
-	Login(xtx context.Context, alumnoID uint, password string) (*domain.Sesion, error)
-	Verify(ctx context.Context, sessionString string) error
-	Logout(ctx context.Context, sessionString string) error
+	Login(ctx context.Context, alumnoID uint, password string) (*domain.Sesion, error)
+	Verify(ctx context.Context, alumnoID uint, sessionString string) error
+	Logout(ctx context.Context, alumnoID uint, sessionString string) error
 }

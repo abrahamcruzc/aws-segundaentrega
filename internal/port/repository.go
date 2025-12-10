@@ -7,8 +7,8 @@ import (
 	"github.com/abrahamcruzc/aws-segundaentrega/internal/domain"
 )
 
-// AlumnoRepository - Operaciones de persistenca para Alumno
-type Alumnorepository interface {
+// AlumnoRepository - Operaciones de persistencia para Alumno
+type AlumnoRepository interface {
 	GetAll(ctx context.Context) ([]domain.Alumno, error)
 	GetByID(ctx context.Context, id uint) (*domain.Alumno, error)
 	Create(ctx context.Context, alumno *domain.Alumno) error

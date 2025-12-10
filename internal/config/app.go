@@ -59,7 +59,7 @@ func Load() (*Config, error) {
 			User:     getEnv("DB_USER", "postgres"),
 			Password: getEnv("DB_PASSWORD", "postgres"),
 			DBName:   getEnv("DB_NAME", "aws_segundaentrega"),
-			SSLMode:  getEnv("DB_NAME", "aws_segundaentrega"),
+			SSLMode:  getEnv("DB_SSLMODE", "disable"),
 		},
 		S3: S3Config{
 			Endpoint:     getEnv("S3_ENDPOINT", "http://localhost:9000"),

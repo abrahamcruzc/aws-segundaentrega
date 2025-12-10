@@ -10,7 +10,7 @@ import (
 
 func NewPostgresConnection(cfg DatabaseConfig) (*gorm.DB, error) {
 	dsn := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode%s",
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		cfg.Host,
 		cfg.Port,
 		cfg.User,
