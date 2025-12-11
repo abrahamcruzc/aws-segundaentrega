@@ -8,7 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-
 type AlumnoRepository struct {
 	db *gorm.DB
 }
