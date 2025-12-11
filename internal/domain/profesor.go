@@ -4,7 +4,7 @@ import "time"
 
 type Profesor struct {
 	ID             uint      `json:"id" gorm:"primaryKey"`
-	NumeroEmpleado string    `json:"numeroEmpleado" gorm:"not null;unique"`
+	NumeroEmpleado int       `json:"numeroEmpleado" gorm:"not null;unique"`
 	Nombres        string    `json:"nombres" gorm:"not null"`
 	Apellidos      string    `json:"apellidos" gorm:"not null"`
 	HorasClase     int       `json:"horasClase" gorm:"not null"`

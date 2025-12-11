@@ -100,8 +100,8 @@ func main() {
 
 	// Iniciar servidor en goroutine
 	go func() {
-		log.Printf("🚀 Servidor iniciado en http://localhost:%s", cfg.Server.Port)
-		log.Println("📚 Endpoints disponibles:")
+		log.Printf("Servidor iniciado en http://localhost:%s", cfg.Server.Port)
+		log.Println("Endpoints disponibles:")
 		log.Println("   GET/POST       /alumnos")
 		log.Println("   GET/PUT/DELETE /alumnos/{id}")
 		log.Println("   POST           /alumnos/{id}/fotoPerfil")

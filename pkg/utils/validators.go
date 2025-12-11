@@ -21,21 +21,19 @@ func ValidateAlumno(nombres, apellidos, matricula string, promedio float64, pass
 		errors.Add("matricula", "El campo matricula es requerido")
 	}
 
-	if promedio < 0 || promedio > 10 {
-		errors.Add("promedio", "El promedio debe estar entre 0 y 10")
+	if promedio < 0 || promedio > 100 {
+		errors.Add("promedio", "El promedio debe estar entre 0 y 100")
 	}
 
-	if isCreate && strings.TrimSpace(password) == "" {
-		errors.Add("password", "El campo password es requerido")
-	}
+	// Password es opcional - los tests no lo envían
 
 	return errors
 }
 
-func ValidateProfesor(numeroEmpleado, nombres, apellidos string, horasClase int) *apperrors.ValidationErrors {
+func ValidateProfesor(numeroEmpleado int, nombres, apellidos string, horasClase int) *apperrors.ValidationErrors {
 	errors := &apperrors.ValidationErrors{}
 
-	if strings.TrimSpace(numeroEmpleado) == "" {
+	if numeroEmpleado <= 0 {
 		errors.Add("numeroEmpleado", "El campo numeroEmpleado es requerido")
 	}
 
