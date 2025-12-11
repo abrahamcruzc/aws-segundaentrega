@@ -57,7 +57,8 @@ func (u *SesionUseCase) Login(ctx context.Context, alumnoID uint, password strin
 }
 
 func (u *SesionUseCase) Verify(ctx context.Context, alumnoID uint, sessionString string) error {
-	if err := utils.ValidateSessionString(sessionString); err != nil {
+	validationErrors := utils.ValidateSessionString(sessionString)
+	if validationErrors.HasErrors() {
 		return apperrors.ErrInvalidInput
 	}
 
@@ -81,7 +82,8 @@ func (u *SesionUseCase) Verify(ctx context.Context, alumnoID uint, sessionString
 }
 
 func (u *SesionUseCase) Logout(ctx context.Context, alumnoID uint, sessionString string) error {
-	if err := utils.ValidateSessionString(sessionString); err != nil {
+	validationErrors := utils.ValidateSessionString(sessionString)
+	if validationErrors.HasErrors() {
 		return apperrors.ErrInvalidInput
 	}
 
