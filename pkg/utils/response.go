@@ -14,7 +14,7 @@ type Response struct {
 func JSON(w http.ResponseWriter, status int, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(Response{Data: data})
+	json.NewEncoder(w).Encode(data)
 }
 
 func JSONMessage(w http.ResponseWriter, status int, message string) {
