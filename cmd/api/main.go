@@ -68,11 +68,18 @@ func main() {
 		log.Printf("Bucket S3 ya existe o error: %v", err)
 	}
 
-	// Inicializar notificador (mock para desarrollo local)
-	var notifier *aws.SNSMock
+	// Inicializar notificador
+	var notifier aws.Notifier
 	if cfg.SNS.Mock {
 		notifier = aws.NewSNSMock()
 		log.Println("SNS Mock habilitado")
+	} else {
+		snsClient, err := config.NewSNSClient(cfg.SNS)
+		if err != nil {
+			log.Fatalf("Error al inicializar cliente SNS: %v", err)
+		}
+		notifier = aws.NewSNSClient(snsClient, cfg.SNS.TopicARN)
+		log.Printf("SNS habilitado con topic: %s", cfg.SNS.TopicARN)
 	}
 
 	// Inicializar casos de uso

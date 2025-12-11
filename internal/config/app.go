@@ -43,7 +43,9 @@ type DynamoDBConfig struct {
 }
 
 type SNSConfig struct {
-	Mock bool
+	Mock     bool
+	TopicARN string
+	Region   string
 }
 
 func Load() (*Config, error) {
@@ -75,7 +77,9 @@ func Load() (*Config, error) {
 			Region:    getEnv("DYNAMODB_REGION", "us_east-1"),
 		},
 		SNS: SNSConfig{
-			Mock: getEnv("SNS_MOCK", "true") == "true",
+			Mock:     getEnv("SNS_MOCK", "true") == "true",
+			TopicARN: getEnv("SNS_TOPIC_ARN", ""),
+			Region:   getEnv("SNS_REGION", "us-east-1"),
 		},
 	}, nil
 }

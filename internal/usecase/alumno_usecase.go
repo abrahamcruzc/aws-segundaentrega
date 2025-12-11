@@ -156,6 +156,9 @@ func (u *AlumnoUseCase) SendEmail(ctx context.Context, id uint) error {
 		alumno.Promedio,
 	)
 
-	email := fmt.Sprintf("%s@universidad.edu", alumno.Matricula)
-	return u.notifier.SendEmail(ctx, email, subject, message)
+	if u.notifier == nil {
+		return fmt.Errorf("notificador no configurado")
+	}
+
+	return u.notifier.Publish(ctx, subject, message)
 }

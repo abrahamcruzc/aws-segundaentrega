@@ -41,5 +41,5 @@ type FileStorage interface {
 
 // NotificationService - Operaciones de notificación
 type NotificationService interface {
-	SendEmail(ctx context.Context, email string, subject string, message string) error
+	Publish(ctx context.Context, subject string, message string) error
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/aws/aws-sdk-go-v2/service/sns"
 )
 
 func NewS3Client(cfg S3Config) (*s3.Client, error) {
@@ -42,4 +43,15 @@ func NewDynamoDBCient(cfg DynamoDBConfig) (*dynamodb.Client, error) {
 	})
 
 	return client, nil
+}
+
+func NewSNSClient(cfg SNSConfig) (*sns.Client, error) {
+	awsCfg, err := config.LoadDefaultConfig(context.TODO(),
+		config.WithRegion(cfg.Region),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return sns.NewFromConfig(awsCfg), nil
 }
