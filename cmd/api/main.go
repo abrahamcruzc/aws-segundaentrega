@@ -31,27 +31,27 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error al conectar a PostgreSQL: %v", err)
 	}
-	log.Println("✅ Conectado a PostgreSQL")
+	log.Println("Conectado a PostgreSQL")
 
 	// Ejecutar migraciones
 	if err := postgres.RunMigrations(db); err != nil {
 		log.Fatalf("Error al ejecutar migraciones: %v", err)
 	}
-	log.Println("✅ Migraciones ejecutadas")
+	log.Println("Migraciones ejecutadas")
 
 	// Crear cliente S3 (MinIO)
 	s3Client, err := config.NewS3Client(cfg.S3)
 	if err != nil {
 		log.Fatalf("Error al crear cliente S3: %v", err)
 	}
-	log.Println("✅ Cliente S3 creado")
+	log.Println("Cliente S3 creado")
 
 	// Crear cliente DynamoDB
 	dynamoClient, err := config.NewDynamoDBCient(cfg.DynamoDB)
 	if err != nil {
 		log.Fatalf("Error al crear cliente DynamoDB: %v", err)
 	}
-	log.Println("✅ Cliente DynamoDB creado")
+	log.Println("Cliente DynamoDB creado")
 
 	// Inicializar repositorios
 	alumnoRepo := postgres.NewAlumnoRepository(db)
@@ -62,17 +62,17 @@ func main() {
 	// Crear tabla DynamoDB y bucket S3 si no existen
 	ctx := context.Background()
 	if err := sesionRepo.CreateTable(ctx); err != nil {
-		log.Printf("⚠️  Tabla DynamoDB ya existe o error: %v", err)
+		log.Printf("Tabla DynamoDB ya existe o error: %v", err)
 	}
 	if err := fileStorage.CreateBucket(ctx); err != nil {
-		log.Printf("⚠️  Bucket S3 ya existe o error: %v", err)
+		log.Printf("Bucket S3 ya existe o error: %v", err)
 	}
 
 	// Inicializar notificador (mock para desarrollo local)
 	var notifier *aws.SNSMock
 	if cfg.SNS.Mock {
 		notifier = aws.NewSNSMock()
-		log.Println("✅ SNS Mock habilitado")
+		log.Println("SNS Mock habilitado")
 	}
 
 	// Inicializar casos de uso
@@ -122,7 +122,7 @@ func main() {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	log.Println("🛑 Apagando servidor...")
+	log.Println("Apagando servidor...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -131,5 +131,5 @@ func main() {
 		log.Fatalf("Error al apagar servidor: %v", err)
 	}
 
-	log.Println("👋 Servidor apagado correctamente")
+	log.Println("Servidor apagado correctamente")
 }
