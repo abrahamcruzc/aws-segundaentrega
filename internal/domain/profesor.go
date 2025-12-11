@@ -11,3 +11,7 @@ type Profesor struct {
 	CreatedAt      time.Time `json:"-"`
 	UpdatedAt      time.Time `json:"-"`
 }
+
+func (Profesor) TableName() string {
+	return "profesores"
+}
