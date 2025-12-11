@@ -21,8 +21,8 @@ func ValidateAlumno(nombres, apellidos, matricula string, promedio float64, pass
 		errors.Add("matricula", "El campo matricula es requerido")
 	}
 
-	if promedio < 0 || promedio > 100 {
-		errors.Add("promedio", "El promedio debe estar entre 0 y 100")
+	if promedio < 0 || promedio > 10 {
+		errors.Add("promedio", "El promedio debe estar entre 0 y 10")
 	}
 
 	// Password es opcional - los tests no lo envían

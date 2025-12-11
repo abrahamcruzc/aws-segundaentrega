@@ -3,7 +3,7 @@ package domain
 import "time"
 
 type Alumno struct {
-	ID            uint      `json:"id" gorm:"primaryKey;autoIncrement:false"`
+	ID            uint      `json:"id" gorm:"primaryKey"`
 	Nombres       string    `json:"nombres" gorm:"not null"`
 	Apellidos     string    `json:"apellidos" gorm:"not null"`
 	Matricula     string    `json:"matricula" gorm:"not null;unique"`
