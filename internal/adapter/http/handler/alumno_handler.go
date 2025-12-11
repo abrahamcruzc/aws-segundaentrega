@@ -17,6 +17,17 @@ type AlumnoHandler struct {
 	service port.AlumnoService
 }
 
+// AlumnoInput - DTO para crear/actualizar alumno (incluye password)
+type AlumnoInput struct {
+	ID            uint    `json:"id"`
+	Nombres       string  `json:"nombres"`
+	Apellidos     string  `json:"apellidos"`
+	Matricula     string  `json:"matricula"`
+	Promedio      float64 `json:"promedio"`
+	FotoPerfilUrl string  `json:"fotoPerfilUrl,omitempty"`
+	Password      string  `json:"password"`
+}
+
 func NewAlumnoHandler(service port.AlumnoService) *AlumnoHandler {
 	return &AlumnoHandler{service: service}
 }
@@ -50,10 +61,20 @@ func (h *AlumnoHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *AlumnoHandler) Create(w http.ResponseWriter, r *http.Request) {
-	var alumno domain.Alumno
-	if err := json.NewDecoder(r.Body).Decode(&alumno); err != nil {
+	var input AlumnoInput
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 		utils.JSONError(w, http.StatusBadRequest, "JSON inválido")
 		return
+	}
+
+	alumno := domain.Alumno{
+		ID:            input.ID,
+		Nombres:       input.Nombres,
+		Apellidos:     input.Apellidos,
+		Matricula:     input.Matricula,
+		Promedio:      input.Promedio,
+		FotoPerfilUrl: input.FotoPerfilUrl,
+		Password:      input.Password,
 	}
 
 	if err := h.service.Create(r.Context(), &alumno); err != nil {
@@ -75,10 +96,19 @@ func (h *AlumnoHandler) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var alumno domain.Alumno
-	if err := json.NewDecoder(r.Body).Decode(&alumno); err != nil {
+	var input AlumnoInput
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 		utils.JSONError(w, http.StatusBadRequest, "JSON inválido")
 		return
+	}
+
+	alumno := domain.Alumno{
+		Nombres:       input.Nombres,
+		Apellidos:     input.Apellidos,
+		Matricula:     input.Matricula,
+		Promedio:      input.Promedio,
+		FotoPerfilUrl: input.FotoPerfilUrl,
+		Password:      input.Password,
 	}
 
 	if err := h.service.Update(r.Context(), uint(id), &alumno); err != nil {
